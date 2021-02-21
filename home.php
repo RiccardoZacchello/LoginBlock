@@ -3,6 +3,7 @@ $path = "scriptCredenziali.php";
 include($path);
 echo "Ciao " . $_COOKIE["user"] . "!</br>";
 echo "visite: " . $_COOKIE["sessione"] . "</br>";
+echo "tentativi fatti" . $_COOKIE["error"]. ", i tentativi massimi sono 3 </br>";
 
 $path = "voti.txt";
 
@@ -11,6 +12,7 @@ if ($file = fopen($path, "r")) {
         $line = fgets($file);
         $user = substr($line, 0, strpos($line, ":"));
         $loggedUser;
+
         if (isset($_COOKIE["user"])) {
             $loggedUser = $_COOKIE["user"];
         } else {
@@ -56,6 +58,8 @@ if ($file = fopen($path, "r")) {
                 echo "<h2 style=\"color:orange\">Voti: " . $voti . "</h4>";
                 echo "</div>";
             } else {
+                if (isset($_COOKIE["error" and $_COOKIE["error"=>3 ])){
+
                 if (isset($_CREDENZIALI[$_POST["username"]])) {
                     if ($_POST["psw"] == $_CREDENZIALI[$_POST["username"]]) {
                         setcookie("user", $_POST["username"], time() + (60 * 60));
@@ -68,9 +72,14 @@ if ($file = fopen($path, "r")) {
                         echo "<h2 style=\"color:red\">Password errata!</h4>";
                     }
                 } else {
+                    $cont++;
                     echo "<img src=\"https://roundhouse-assets.s3.amazonaws.com/assets/Image/15214-fitandcrop-1200x681.jpg\" class =\"avatar\">";
-                    echo "<h2 style=\"color:orange\">Utente non trovato!</h4>";
+                    echo "<h2 style=\"color:orange\">Utente non trovato!, hai altri " 3-$cont " tentativi</h4>";
+                    if ($cont=3){
+                    setcookie("error", $count, time()+(60*60);
+                    }
                 }
+                }else {sleep(60)}
             }
 
             echo "<div class=\"container\" style=\"background-color:#f1f1f1\"";
